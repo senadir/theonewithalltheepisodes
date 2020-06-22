@@ -18,7 +18,7 @@
   position: sticky;
   top: 0;
 }
-.search-input {
+.search-input .ais-SearchBox-input {
   width: 90%;
   height: 60px;
   line-height: 48px;
@@ -31,5 +31,19 @@
   &:focus {
     border-color: rgb(26, 115, 232);
     outline: none;
+  }
+}
+
+.ais-InfiniteHits-loadMore {
+  height: 42px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: none;
+  background-color: rgb(26, 115, 232);
+  color: white;
+  margin-bottom: 32px;
+  &.ais-InfiniteHits-loadMore--disabled {
+    background-color: grey;
   }
 }

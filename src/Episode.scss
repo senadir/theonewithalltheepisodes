@@ -1,3 +1,22 @@
+.ais-InfiniteHits-item {
+	list-style: none;
+}
+.ais-InfiniteHits-list {
+	padding-left: 0;
+}
+
+.ais-Highlight-highlighted {
+	background-color:rgba(255, 225, 0);
+	display: inline-block;
+	margin-left: -2px;
+    margin-right: -2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.ais-SearchBox-submit,
+.ais-SearchBox-reset {
+	display: none
+}
 .episode {
 	display: flex;
 	color: black;
