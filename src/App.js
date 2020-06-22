@@ -1,17 +1,31 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import 'normalize.css';
 import './App.scss';
-import sourceEpisodes from './episodes.json';
+import elasticlunr from 'elasticlunr';
+import shuffle from 'shuffle-array';
 import Episode from './Episode'
+import sourceEpisodes from './episodes.json';
+import searchIndex from './index.json';
 function App() {
   const [search, setSearch] = useState("");
-  const [episodes, setEpisodes] = useState([])
+  const [episodes, setEpisodes] = useState([]);
+  const idx = useRef();
+  useEffect(() => {
+    idx.current = elasticlunr.Index.load(searchIndex);
+
+  })
   useEffect(() => {
     if (!search) {
-      setEpisodes(sourceEpisodes.slice(0,10));
+      setEpisodes(shuffle.pick(sourceEpisodes, {picks: 10, copy: true}));
     } else {
-      const regex = new RegExp(search, 'ig')
-      setEpisodes(sourceEpisodes.filter(episode => episode.title.search(regex) >= 0).slice(0,10))
+      const results = idx.current.search(search, {
+        fields: {
+            title: {boost: 10,bool: "AND"},
+            plot: {boost: 1}
+        },
+        bool: "AND"
+    });
+      setEpisodes(sourceEpisodes.filter(({link}) => results.find(({ref}) => ref === link)))
     }
   }, [search])
   return (
